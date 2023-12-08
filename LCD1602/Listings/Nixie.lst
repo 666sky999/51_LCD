@@ -1,0 +1,66 @@
+C51 COMPILER V9.60.7.0   NIXIE                                                             09/23/2023 20:38:38 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE NIXIE
+OBJECT MODULE PLACED IN .\Objects\Nixie.obj
+COMPILER INVOKED BY: F:\Keil5\C51\BIN\C51.EXE HARDWARE\Nixie.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\HARDWARE) DEBUG OBJECTE
+                    -XTEND PRINT(.\Listings\Nixie.lst) OBJECT(.\Objects\Nixie.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          #include <INTRINS.H>
+   3          
+   4          unsigned char NixieTable[] = {0xc0, 0xf9, 0xa4, 0xb0, 0x99, 0x92, 0x82, 0xf8, 0x80, 0x90, 0x88};
+   5          
+   6          sbit P27 = P2^7;
+   7          sbit P26 = P2^6;
+   8          sbit P25 = P2^5;
+   9          
+  10          void Delay500us()               //@11.0592MHz
+  11          {
+  12   1              unsigned char i, j;
+  13   1      
+  14   1              _nop_();
+  15   1              _nop_();
+  16   1              i = 6;
+  17   1              j = 93;
+  18   1              do
+  19   1              {
+  20   2                      while (--j);
+  21   2              } while (--i);
+  22   1      }
+  23          
+  24          void Nixie(unsigned char Location,Number)
+  25          {
+  26   1              switch(Location)
+  27   1              {
+  28   2                      case 1: P27 = 1; P26 = 1; P25 = 0; P0 = 0x01 << 0; break; 
+  29   2                      case 2: P27 = 1; P26 = 1; P25 = 0; P0 = 0x01 << 1; break; 
+  30   2                      case 3: P27 = 1; P26 = 1; P25 = 0; P0 = 0x01 << 2; break;
+  31   2                      case 4: P27 = 1; P26 = 1; P25 = 0; P0 = 0x01 << 3; break; 
+  32   2                      case 5: P27 = 1; P26 = 1; P25 = 0; P0 = 0x01 << 4; break; 
+  33   2                      case 6: P27 = 1; P26 = 1; P25 = 0; P0 = 0x01 << 5; break; 
+  34   2                      case 7: P27 = 1; P26 = 1; P25 = 0; P0 = 0x01 << 6; break; 
+  35   2                      case 8: P27 = 1; P26 = 1; P25 = 0; P0 = 0x01 << 7; break;
+  36   2              }
+  37   1              P27 = 1;
+  38   1              P26 = 1;
+  39   1              P25 = 1;
+  40   1              P0 = NixieTable[Number];
+  41   1              Delay500us();
+  42   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    158    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     11    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
